@@ -1,0 +1,57 @@
+{%- extends 'layout.html' -%}
+
+{%- block head -%}
+    <title>{%- block title -%}{{ config.title|raw }} - {{config.branding|raw}}{%- endblock -%}</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    
+    <link rel="stylesheet" type="text/css" href="/css/main{{mobile}}.css" />
+    
+    {%- block css -%}{%- endblock -%}
+    
+    {%- block opengraphdata -%}
+        <meta property="og:title" content="{{config.name}} - {{config.branding|raw}}" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="{{config.protocol}}{{config.url}}" />
+        <meta property="og:image" content="{{config.protocol}}{{config.url}}/img/logo.png" />
+    {%- endblock -%}
+{%- endblock -%}
+
+{%- block body %}
+    <div id="wrapper">
+        <header class="main">
+            <div id="logo">
+                {%- if config.logo -%}
+                    <a href="/">
+                        <img src="{{ config.logo }}" height="135" width="135" alt="{{ config.title }}" title="{{ config.title }}" />
+                    </a>
+                {%- endif -%}
+            </div>
+
+            <div id="header-container">
+                <span id="branding" href="/">{{ config.title|raw }}</span>
+                <nav>
+                    <ul>
+                        <li><a href="/about/">about</a></li>
+                        {% if user %}
+                        <li><a href="/account/{{user.slug}}">account</a></li>
+                        <li><a href="/logout">logout</a></li>
+                        {% else %}
+                        <li><a href="/signup">sign up</a></li>
+                        <li><a href="/login">login</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        
+        <div id="container">  
+            <div id="content">            
+                {% block pageContent -%}{%- endblock %}
+            </div>
+        </div>
+        
+        {% block js %}
+            <script src="/js/thirdparty/jquery.1.9.1.js" type="text/javascript"></script>
+        {% endblock %}
+    </div>
+{%- endblock -%}
